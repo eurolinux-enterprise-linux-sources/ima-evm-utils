@@ -1,13 +1,15 @@
+
 Summary: IMA/EVM support utilities
 Name: ima-evm-utils
 Version: 1.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2
 Url:  http://linux-ima.sourceforge.net/
 Source: http://sourceforge.net/projects/linux-ima/files/ima-evm-utils/%{name}-%{version}.tar.gz
 BuildRequires: autoconf automake libtool m4 asciidoc libxslt
 BuildRequires: openssl-devel libattr-devel keyutils-libs-devel
 Patch1: docbook-xsl-path.patch
+Patch2: libimaevm-keydesc-import.patch
 
 %description
 The Trusted Computing Group(TCG) run-time Integrity Measurement Architecture
@@ -27,6 +29,7 @@ This package provides the header files for %{name}
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 mkdir -p m4
@@ -55,6 +58,9 @@ find %{buildroot}%{_libdir} -type f -name "*.la" -print -delete
 %{_mandir}/man1/*
 
 %changelog
+* Fri Mar 01 2019 Bruno E. O. Meneguele <bmeneg@redhat.com> - 1.1-3
+- Add patch to correctly handle key description on keyring during importation
+
 * Mon Feb 26 2018 Bruno E. O. Meneguele <brdeoliv@redhat.com> - 1.1-2
 - Add Requires for -devel subpackage
 
